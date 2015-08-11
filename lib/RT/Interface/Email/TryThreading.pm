@@ -67,7 +67,7 @@ sub GetCurrentUser {
     return ($args->{'CurrentUser'}, $args{'AuthLevel'});
 }
 
-sub FetchPossibleHeaders ($message) {
+sub FetchPossibleHeaders {
     my $message = shift();
     
     # The message is a MIME::Entity
@@ -95,9 +95,8 @@ sub FetchPossibleHeaders ($message) {
     }
 }
 
-sub MessageIdToTicket ($id) {
+sub MessageIdToTicket {
     # Copied heavily from rt-references
-
     my $id = shift();
 
     my $attachments = RT::Attachments->new($RT::SystemUser);
