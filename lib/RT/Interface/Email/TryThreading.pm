@@ -81,7 +81,7 @@ sub FetchPossibleHeaders {
     if ($head->get('References')) {
 	chomp();
 
-	foreach my $ref (split("\w+", $_)) {
+	foreach my $ref (split(/\s+/, $_)) {
 	    $ref =~ /,?<([^>]+)>/;
 	    if ($1) {
 		push(@msgids, $1);
