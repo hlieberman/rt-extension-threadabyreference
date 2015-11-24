@@ -41,9 +41,9 @@ sub GetCurrentUser {
     }
 
     my %tickets = ();
-    foreach $messageid (@messageids) {
+    foreach my $messageid (@messageids) {
 	if (MessageIdToTicket($messageid)) {
-	    foreach $ticket ($_) {
+	    foreach my $ticket ($_) {
 		$tickets{$ticket} = undef;
 	    }
 	}
