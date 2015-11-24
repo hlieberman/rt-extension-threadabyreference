@@ -25,9 +25,9 @@ sub GetCurrentUser {
 	@_
 	);
 
-    if ($args->{'Ticket'}) {
+    if ($args{'Ticket'}) {
 	$RT::Logger->debug("Ticket %s already assigned.  You don't need my help!", 
-			   $args->{'Ticket'});
+			   $args{'Ticket'});
 	return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
 
@@ -53,7 +53,7 @@ sub GetCurrentUser {
 
     if (scalar(@tickets) == 0) {
 	$RT::Logger->debug("No tickets for references found.");
-	return ($args->{'CurrentUser'}, $args{'AuthLevel'});
+	return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
     elsif (scalar(@tickets) > 1) {
 	$RT::Logger->warning("Email maps to more than one ticket.");
@@ -64,7 +64,7 @@ sub GetCurrentUser {
     $RT::Logger->debug("Threading email in ticket %s", $tickets[0]);
     $args{'Ticket'}->Load($tickets[0]);
 
-    return ($args->{'CurrentUser'}, $args{'AuthLevel'});
+    return ($args{'CurrentUser'}, $args{'AuthLevel'});
 }
 
 sub FetchPossibleHeaders {
