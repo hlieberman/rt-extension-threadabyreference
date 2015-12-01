@@ -31,6 +31,11 @@ sub GetCurrentUser {
 	return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
 
+    # For testing purposes, bail if the queue isn't right.
+    unless ($args->{'Queue'}->Name == "SecLawTest") {
+        return ($args{'CurrentUser'}, $args{'AuthLevel'});
+    }
+
     $RT::Logger->debug("Operating on queue %s", $args{'Queue'});
 
     my @messageids = FetchPossibleHeaders($args{'Message'});
