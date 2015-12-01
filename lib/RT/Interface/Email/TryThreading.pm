@@ -36,7 +36,7 @@ sub GetCurrentUser {
         return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
 
-    $RT::Logger->debug("Operating on queue %s", $args{'Queue'});
+    $RT::Logger->debug("Operating on queue %s", $args{'Queue'}->Name);
 
     my @messageids = FetchPossibleHeaders($args{'Message'});
 
