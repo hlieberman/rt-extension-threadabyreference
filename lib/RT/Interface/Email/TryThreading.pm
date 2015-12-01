@@ -7,7 +7,7 @@ use RT::Interface::Email ();
 
 =head1 NAME
 
-RT::Interface::Email::TryThreading - Use In-Reply-To and other headers to try and find a ticket
+RT::Interface::Email::TryThreading - Use References to try and find a matching ticket
 
 =cut
 
