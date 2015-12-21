@@ -7,7 +7,7 @@ use RT::Interface::Email ();
 
 =head1 NAME
 
-RT::Interface::Email::TryThreading - Use In-Reply-To and other headers to try and find a ticket
+RT::Interface::Email::TryThreading - Use References and other headers to try and find a ticket
 
 =cut
 
@@ -25,9 +25,9 @@ sub GetCurrentUser {
 	@_
 	);
 
-    if ($args{'Ticket'}) {
+    if ($args{'Ticket'}->id) {
 	$RT::Logger->debug("Ticket %s already assigned.  You don't need my help!", 
-			   $args{'Ticket'});
+			   $args{'Ticket'}->id);
 	return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
 
@@ -42,8 +42,8 @@ sub GetCurrentUser {
 
     my %tickets = ();
     foreach my $messageid (@messageids) {
-	if (MessageIdToTicket($messageid)) {
-	    foreach my $ticket ($_) {
+	if (my $ids = MessageIdToTicket($messageid)) {
+	    foreach my $ticket ($ids) {
 		$tickets{$ticket} = undef;
 	    }
 	}
@@ -78,10 +78,10 @@ sub FetchPossibleHeaders {
     # There may be multiple references
     # In practice, In-Reply-To seems to no longer be worth parsing, as
     # it seems to usually just be a repeat of the References.
-    if ($head->get('References')) {
+    if (my $refs = $head->get('References')) {
 	chomp();
 
-	foreach my $ref (split(/\s+/, $_)) {
+	foreach my $ref (split(/\s+/, $refs)) {
 	    $ref =~ /,?<([^>]+)>/;
 	    if ($1) {
 		push(@msgids, $1);
@@ -93,6 +93,7 @@ sub FetchPossibleHeaders {
 	    }
 	}
     }
+    return @msgids;
 }
 
 sub MessageIdToTicket {
@@ -136,7 +137,7 @@ sub MessageIdToTicket {
 	);
 
     my %tickets;
-    while (my $attach => $attachments->Next) {
+    while (my $attach = $attachments->Next) {
 	$tickets{$attach->TransactionObj()->Ticket} = undef;
     }
 
