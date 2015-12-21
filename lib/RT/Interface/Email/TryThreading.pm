@@ -26,12 +26,12 @@ sub GetCurrentUser {
 	);
 
     if ($args{'Ticket'}->id) {
-	$RT::Logger->debug("Ticket %s already assigned.  You don't need my help!", 
-			   $args{'Ticket'}->id);
+	$RT::Logger->debug(sprintf("Ticket %s already assigned.  You don't need my help!", 
+			   $args{'Ticket'}->id));
 	return ($args{'CurrentUser'}, $args{'AuthLevel'});
     }
 
-    $RT::Logger->debug("Operating on queue %s", $args{'Queue'});
+    $RT::Logger->debug(sprintf("Operating on queue %s", $args{'Queue'}));
 
     my @messageids = FetchPossibleHeaders($args{'Message'});
 
@@ -57,11 +57,11 @@ sub GetCurrentUser {
     }
     elsif (scalar(@tickets) > 1) {
 	$RT::Logger->warning("Email maps to more than one ticket.");
-	$RT::Logger->warning("Tickets: %s", @tickets);
+	$RT::Logger->warning(sprintf("Tickets: %s", @tickets));
     }
 
     # We have the ticket.  Set it.
-    $RT::Logger->debug("Threading email in ticket %s", $tickets[0]);
+    $RT::Logger->debug(sprintf("Threading email in ticket %s", $tickets[0]));
     $args{'Ticket'}->Load($tickets[0]);
 
     return ($args{'CurrentUser'}, $args{'AuthLevel'});
@@ -85,10 +85,10 @@ sub FetchPossibleHeaders {
 	    $ref =~ /,?<([^>]+)>/;
 	    if ($1) {
 		push(@msgids, $1);
-		$RT::Logger->debug("Found reference: %s", $1);
+		$RT::Logger->debug(sprintf("Found reference: %s", $1));
 	    }
 	    else {
-		$RT::Logger->debug("Reference with borked syntax: %s", $ref);
+		$RT::Logger->debug(sprintf("Reference with borked syntax: %s", $ref));
 		next;
 	    }
 	}
@@ -143,4 +143,5 @@ sub MessageIdToTicket {
 
     return keys(%tickets);
 }
+
 1;
