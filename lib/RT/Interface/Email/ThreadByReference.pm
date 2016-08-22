@@ -1,18 +1,12 @@
-package RT::Interface::Email::TryThreading;
+package RT::Interface::Email::ThreadByReference;
 
 use strict;
 use warnings;
 
 use RT::Interface::Email ();
 
-=head1 NAME
-
-RT::Interface::Email::TryThreading - Use References and other headers to try and find a ticket
-
-=cut
-
 sub GetCurrentUser {
-    $RT::Logger->debug("Entering TryThreading");
+    $RT::Logger->debug("Entering ThreadByReference");
 
     my %args = (
 	Message       => undef,
