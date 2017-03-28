@@ -6,7 +6,7 @@ our $VERSION = '0.01';
 
 =head1 NAME
 
-RT-Extension-ThreadByReference - Use ThreadByReference to try and thread messages to tickets
+RT-Extension-ThreadByReference - Use the MIME Reference header to try and thread messages to tickets
 
 =head1 DESCRIPTION
 
@@ -15,7 +15,7 @@ difficult to get the subject lines correct in all parts of the
 message.  This can cause a single thread to spawn off tens of
 different tickets that need manual merging.
 
-This extension uses the MIME ThreadByReference headers to search for threads
+This extension uses the MIME Reference header to search for threads
 to associate a message with.
 
 =head1 RT VERSION
